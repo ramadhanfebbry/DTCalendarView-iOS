@@ -67,11 +67,13 @@ class DTWeekdayViewCell: UICollectionViewCell {
     
     func setDisplayAttributes(_ displayAttributes: DisplayAttributes) {
         backgroundColor = displayAttributes.backgroundColor
+        var i = 0
         
         for dayLabel in dayLabels {
-            dayLabel.textColor = displayAttributes.textColor
+            dayLabel.textColor = i == 0 ? UIColor.red : displayAttributes.textColor
             dayLabel.textAlignment = displayAttributes.textAlignment
             dayLabel.font = displayAttributes.font
+            i += 1
         }
     }
 }

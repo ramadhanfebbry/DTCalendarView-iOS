@@ -41,6 +41,7 @@ class DTCalendarDayView: UIView {
     private var selectedLayer = CAShapeLayer()
     
     private var highLightLayer = CAShapeLayer()
+    let calendar = NSCalendar.current
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -170,5 +171,19 @@ class DTCalendarDayView: UIView {
             dayLabel.textAlignment = weekDisplayAttributes.previewDisplayAttributes.textAlignment
             backgroundColor = weekDisplayAttributes.previewDisplayAttributes.backgroundColor
         }
+        
+        let year1 = calendar.component(.year, from: representedDate)
+        let month1 = calendar.component(.month, from: representedDate)
+        let day1 = calendar.component(.day, from: representedDate)
+        let today = Date()
+        let year2 = calendar.component(.year, from: today)
+        let month2 = calendar.component(.month, from: today)
+        let day2 = calendar.component(.day, from: today)
+
+        if(year1 == year2 && month1 == month2 && day1 == day2){
+            dayLabel.textColor = .blue
+            dayLabel.font = weekDisplayAttributes.selectedDisplayAttributes.font
+        }
+        
     }
 }
