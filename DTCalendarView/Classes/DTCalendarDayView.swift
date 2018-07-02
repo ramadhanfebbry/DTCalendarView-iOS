@@ -24,7 +24,7 @@ class DTCalendarDayView: UIView {
     var isPreview = false
     var isDisabled = false
     var previewDaysInPreviousAndMonth = true
-    
+    public var holidays = [Date]()
     var representedDate = Date()
     
     var dayAlpha: CGFloat {
@@ -179,11 +179,28 @@ class DTCalendarDayView: UIView {
         let year2 = calendar.component(.year, from: today)
         let month2 = calendar.component(.month, from: today)
         let day2 = calendar.component(.day, from: today)
+        var holidays = [Date]()
+        if let holidayTmp = UserDefaults.standard.value(forKey: "holidays") as? [Date] {
+            holidays = holidayTmp
+        }
+        
+//        NSDateComponents *component = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:[NSDate date]];
 
+        let comps = calendar.component(.weekday, from: representedDate)
+        
         if(year1 == year2 && month1 == month2 && day1 == day2){
             dayLabel.textColor = .blue
             dayLabel.font = weekDisplayAttributes.selectedDisplayAttributes.font
+        }else if(holidays.contains(representedDate) || comps == 1){
+            dayLabel.textColor = .red
+            dayLabel.font = weekDisplayAttributes.selectedDisplayAttributes.font
         }
+        else{
+//            dayLabel.textColor = .red
+//            dayLabel.font = weekDisplayAttributes.selectedDisplayAttributes.font
+        }
+        
+        
         
     }
 }

@@ -26,6 +26,8 @@ class DTCalendarWeekCell: UICollectionViewCell {
     
     var previewDaysInPreviousAndMonth = true
     
+    public var holidays = [Date]()
+    
     var mondayShouldBeTheFirstDayOfTheWeek = false
     
     weak var delegate: DTCalendarWeekCellDelegate?
@@ -103,7 +105,7 @@ class DTCalendarWeekCell: UICollectionViewCell {
         
         for dayView in dayViews {
             contentView.addSubview(dayView)
-            
+            dayView.holidays = holidays
             dayView.isUserInteractionEnabled = true
             let tapGR = UITapGestureRecognizer(target: self, action: #selector(dayViewTapped(_:)))
             dayView.addGestureRecognizer(tapGR)

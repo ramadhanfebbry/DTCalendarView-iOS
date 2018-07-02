@@ -210,6 +210,9 @@ public class DTCalendarView: UIView {
     /// Should the calendar scroll be paginated and always lock to the top of a month
     public var paginateMonths = true
     
+    
+    
+    
     /// The first day of the week should be a Monday
     public var mondayShouldBeTheFirstDayOfTheWeek = false {
         didSet {
@@ -356,6 +359,15 @@ public class DTCalendarView: UIView {
      
      - parameter state: The day state the attributes apply to
     */
+    
+    var holidays = [Date]()
+    
+    public func setHolidays(_ dates: [Date]){
+        holidays = dates
+        UserDefaults.standard.set(holidays, forKey: "holidays")
+        setNeedsUpdate()
+    }
+    
     public func setDisplayAttributes(_ displayAttributes: DisplayAttributes, forState state: DayState) {
         
         var normalDisplayAttributes = weekDisplayAttributes.normalDisplayAttributes
@@ -366,7 +378,6 @@ public class DTCalendarView: UIView {
         
         switch state {
         case .normal:
-            collectionView.backgroundColor = displayAttributes.backgroundColor
             normalDisplayAttributes = displayAttributes
         case .selected:
             selectedDisplayAttributes = displayAttributes
@@ -631,6 +642,7 @@ extension DTCalendarView: UICollectionViewDataSource {
                 }
                 
                 weekViewCell.delegate = self
+                weekViewCell.holidays = holidays
                 weekViewCell.selectionStartDate = selectionStartDate
                 weekViewCell.selectionEndDate = selectionEndDate
                 weekViewCell.displayMonth = date
